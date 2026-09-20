@@ -1,1 +1,0 @@
-{"statusCode":401,"error":"Unauthorized","message":"[security_exception\n\tRoot causes:\n\t\tsecurity_exception: missing authentication credentials for REST request [/_security/_authenticate]]: missing authentication credentials for REST request [/_security/_authenticate]"}

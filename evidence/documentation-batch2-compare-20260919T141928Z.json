@@ -1,9 +1,0 @@
-{
-  "comparison": "pre-change versus post-change, excluding server-managed id, revision, timestamps, and execution_summary",
-  "readback_http_status": 200,
-  "results": [
-    {"rule_id":"3934f4fe-c522-4fc9-88fc-81cf61697a0c","saved_object_id":"9471e897-5069-4908-bc24-9f9a17a29c2d","description_changed":true,"note_changed":true,"all_other_compared_fields_match":true,"revision":1,"updated_at":"2026-09-19T14:19:11.745Z","enabled":true},
-    {"rule_id":"b8f86668-4415-4b10-be9c-9424fe59f647","saved_object_id":"d61387bf-eb1f-4ca4-a5c6-0b05fd75a63b","description_changed":true,"note_changed":true,"all_other_compared_fields_match":true,"revision":1,"updated_at":"2026-09-19T14:19:12.931Z","enabled":true},
-    {"rule_id":"818a5377-ab99-41f7-a0e8-0c81a9d73759","saved_object_id":"50457dc6-b2ee-41ec-889b-abd4af8527b6","description_changed":true,"note_changed":true,"all_other_compared_fields_match":true,"revision":3,"updated_at":"2026-09-19T14:19:14.100Z","enabled":true}
-  ]
-}
