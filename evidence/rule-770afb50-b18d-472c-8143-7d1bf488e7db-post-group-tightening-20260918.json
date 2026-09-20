@@ -1,0 +1,15 @@
+{
+  "id": "770afb50-b18d-472c-8143-7d1bf488e7db",
+  "name": "PAN-OS Anonymizer or Unusual Tunnel Application",
+  "alert_suppression": {
+    "group_by": [
+      "panw.panos.application.tunneled"
+    ],
+    "duration": {
+      "value": 1,
+      "unit": "h"
+    }
+  },
+  "revision": 4,
+  "updated_at": "2026-09-18T18:50:47.972Z"
+}

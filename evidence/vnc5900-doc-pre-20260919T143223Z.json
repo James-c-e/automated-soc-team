@@ -1,0 +1,93 @@
+{
+  "timestamp_utc": "2026-09-19T14:32:23Z",
+  "endpoint": "GET /api/detection_engine/rules/_find?per_page=1000",
+  "http_status": 200,
+  "rule": {
+    "id": "b8425e44-58a2-4f74-9685-41c42938c169",
+    "updated_at": "2026-09-18T19:11:55.702Z",
+    "updated_by": "security@securecloudplus.co.uk",
+    "created_at": "2026-09-18T19:11:55.702Z",
+    "created_by": "security@securecloudplus.co.uk",
+    "name": "PAN-OS Allowed VNC TCP/5900 Activity",
+    "tags": [
+      "Tactic: Command and Control",
+      "Technique: T1219",
+      "Data Source: PAN-OS",
+      "Use Case: Threat Detection"
+    ],
+    "interval": "5m",
+    "enabled": true,
+    "revision": 0,
+    "description": "Detects repeated allowed PAN-OS traffic to VNC TCP/5900 from internal sources. Blocked scans are excluded; the threshold requires repeated activity for the same source and destination.",
+    "risk_score": 47,
+    "severity": "medium",
+    "output_index": "",
+    "author": [
+      "SOC Analyst"
+    ],
+    "false_positives": [],
+    "from": "now-9m",
+    "rule_id": "dd14d64a-2ddb-4d0e-b0a6-f8ccd4ffb6e8",
+    "max_signals": 5,
+    "risk_score_mapping": [],
+    "severity_mapping": [],
+    "threat": [
+      {
+        "framework": "MITRE ATT&CK",
+        "tactic": {
+          "id": "TA0011",
+          "name": "Command and Control",
+          "reference": "https://attack.mitre.org/tactics/TA0011/"
+        },
+        "technique": [
+          {
+            "id": "T1219",
+            "name": "Remote Access Software",
+            "reference": "https://attack.mitre.org/techniques/T1219/"
+          }
+        ]
+      }
+    ],
+    "to": "now",
+    "references": [],
+    "version": 1,
+    "exceptions_list": [],
+    "immutable": false,
+    "rule_source": {
+      "type": "internal"
+    },
+    "related_integrations": [],
+    "required_fields": [],
+    "setup": "",
+    "type": "threshold",
+    "language": "kuery",
+    "index": [
+      "packetbeat-*",
+      "auditbeat-*",
+      "filebeat-*",
+      "logs-network_traffic.*",
+      "logs-panw.panos*"
+    ],
+    "query": "event.dataset:\"panw.panos\" and panw.panos.type:\"TRAFFIC\" and network.transport:tcp and destination.port:5900 and panw.panos.action:allow and event.action:flow_started and source.ip:(10.0.0.0/8 or 172.16.0.0/12 or 192.168.0.0/16)",
+    "threshold": {
+      "field": [
+        "source.ip",
+        "destination.ip"
+      ],
+      "value": 3
+    },
+    "actions": [],
+    "execution_summary": {
+      "last_execution": {
+        "date": "2026-09-19T14:26:59.500Z",
+        "status": "succeeded",
+        "status_order": 0,
+        "message": "Rule execution completed successfully",
+        "metrics": {
+          "total_indexing_duration_ms": 90,
+          "total_search_duration_ms": 46
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "52644eb8-2f3b-4aea-8c64-3fcc2567a72d",
+  "name": "PAN-OS High-Risk URL-Filtering Alert",
+  "alert_suppression": {
+    "group_by": [
+      "panw.panos.application.risk_level"
+    ],
+    "duration": {
+      "value": 1,
+      "unit": "h"
+    }
+  },
+  "revision": 6,
+  "updated_at": "2026-09-18T18:50:48.803Z"
+}

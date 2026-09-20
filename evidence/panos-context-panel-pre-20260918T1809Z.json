@@ -1,0 +1,14 @@
+{
+  "captured_at": "2026-09-18T18:09:00Z",
+  "operation": "GET /api/saved_objects/dashboard/panos-threat-monitoring-readonly",
+  "http_status": 200,
+  "dashboard_id": "panos-threat-monitoring-readonly",
+  "updated_at": "2026-09-18T18:07:23.444Z",
+  "panel_count": 2,
+  "panel_ids": ["panos-markdown-1", "panos-validation-2"],
+  "panel_titles": [
+    "Detection scope and investigation fields",
+    "Rule activity and validation"
+  ],
+  "rollback": "Restore the preserved two-panel attributes and references with PUT to the same saved-object ID, then GET for read-back."
+}

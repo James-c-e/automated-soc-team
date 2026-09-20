@@ -1,0 +1,106 @@
+{
+  "captured_at_utc": "20260919T140534Z",
+  "operation": "GET collection pre-change complete rule",
+  "endpoint": "http://172.16.201.10:5601/api/detection_engine/rules/_find?per_page=1000",
+  "http_status": 200,
+  "rule": {
+    "id": "0d2103f1-31fa-457b-b26e-e9e2cfad7711",
+    "updated_at": "2026-09-13T21:49:58.571Z",
+    "updated_by": "security@securecloudplus.co.uk",
+    "created_at": "2026-09-13T21:48:57.526Z",
+    "created_by": "security@securecloudplus.co.uk",
+    "name": "Possible FIN7 DGA Command and Control Behavior (PAN-OS schema)",
+    "tags": [
+      "Use Case: Threat Detection",
+      "Tactic: Command and Control",
+      "Domain: Endpoint",
+      "Data Source: PAN-OS",
+      "Resources: Investigation Guide"
+    ],
+    "interval": "5m",
+    "enabled": true,
+    "revision": 1,
+    "description": "This rule detects a known command and control pattern in network events. The FIN7 threat group is known to use this command and control technique, while maintaining persistence in their target's network.",
+    "risk_score": 73,
+    "severity": "high",
+    "note": "## Triage and analysis\n\nIn the event this rule identifies benign domains in your environment, the `destination.domain` field in the rule can be modified to include those domains. Example: `...AND NOT destination.domain:(zoom.us OR benign.domain1 OR benign.domain2)`.",
+    "output_index": "",
+    "timestamp_override": "event.ingested",
+    "author": [
+      "Elastic"
+    ],
+    "false_positives": [
+      "This rule could identify benign domains that are formatted similarly to FIN7's command and control algorithm. Alerts should be investigated by an analyst to assess the validity of the individual observations."
+    ],
+    "from": "now-9m",
+    "rule_id": "3a544856-83d0-41a5-9940-8c84297b69f0",
+    "max_signals": 100,
+    "risk_score_mapping": [],
+    "severity_mapping": [],
+    "threat": [
+      {
+        "framework": "MITRE ATT&CK",
+        "tactic": {
+          "id": "TA0011",
+          "name": "Command and Control",
+          "reference": "https://attack.mitre.org/tactics/TA0011/"
+        },
+        "technique": [
+          {
+            "id": "T1071",
+            "name": "Application Layer Protocol",
+            "reference": "https://attack.mitre.org/techniques/T1071/"
+          },
+          {
+            "id": "T1568",
+            "name": "Dynamic Resolution",
+            "reference": "https://attack.mitre.org/techniques/T1568/",
+            "subtechnique": [
+              {
+                "id": "T1568.002",
+                "name": "Domain Generation Algorithms",
+                "reference": "https://attack.mitre.org/techniques/T1568/002/"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "to": "now",
+    "references": [
+      "https://www.fireeye.com/blog/threat-research/2018/08/fin7-pursuing-an-enigmatic-and-evasive-global-criminal-operation.html"
+    ],
+    "version": 1,
+    "exceptions_list": [],
+    "immutable": false,
+    "rule_source": {
+      "type": "internal"
+    },
+    "related_integrations": [],
+    "required_fields": [],
+    "setup": "",
+    "type": "query",
+    "language": "lucene",
+    "index": [
+      "packetbeat-*",
+      "auditbeat-*",
+      "filebeat-*",
+      "logs-network_traffic.*",
+      "logs-panw.panos*"
+    ],
+    "query": "event.dataset:\"panw.panos\" AND event.category:network AND destination.domain:/[a-zA-Z]{4,5}\\.(pw|us|club|info|site|top)/ AND NOT destination.domain:zoom.us",
+    "actions": [],
+    "execution_summary": {
+      "last_execution": {
+        "date": "2026-09-19T14:04:16.723Z",
+        "status": "succeeded",
+        "status_order": 0,
+        "message": "Rule execution completed successfully",
+        "metrics": {
+          "total_indexing_duration_ms": 35,
+          "total_search_duration_ms": 7
+        }
+      }
+    }
+  }
+}

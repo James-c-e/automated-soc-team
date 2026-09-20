@@ -1,0 +1,155 @@
+{
+  "captured_at_utc": "20260919T140622Z",
+  "operation": "GET collection post-change read-back complete rule",
+  "endpoint": "http://172.16.201.10:5601/api/detection_engine/rules?id=8fd22c70-7dcc-4262-88e2-ccde84a86ccd",
+  "http_status": 200,
+  "rule": {
+    "id": "8fd22c70-7dcc-4262-88e2-ccde84a86ccd",
+    "updated_at": "2026-09-19T14:06:09.896Z",
+    "updated_by": "security@securecloudplus.co.uk",
+    "created_at": "2026-09-13T21:48:53.484Z",
+    "created_by": "security@securecloudplus.co.uk",
+    "name": "Potential SYN-Based Port Scan Detected (PAN-OS schema)",
+    "tags": [
+      "Domain: Network",
+      "Tactic: Discovery",
+      "Tactic: Reconnaissance",
+      "Use Case: Network Security Monitoring",
+      "Data Source: PAN-OS",
+      "Resources: Investigation Guide"
+    ],
+    "interval": "5m",
+    "enabled": true,
+    "revision": 2,
+    "description": "Detects possible low-packet port-scanning behavior from an internal source. The current query looks for a source contacting many destination ports with no more than two packets per event. It does not prove that the traffic used TCP or SYN packets, and it does not prove that access to any service succeeded.",
+    "risk_score": 21,
+    "severity": "low",
+    "note": "## Investigation guide\n\n### What this alert means\n\nThis alert identifies possible low-packet port-scanning behavior. One internal source contacted many destination ports while each event contained no more than two packets. The current query does not prove TCP/SYN traffic, and this alert does not prove that a login, service connection, or compromise succeeded.\n\n### What to check\n\n- Record the alert time, source address, destination address, destination ports, packet count, and connection result.\n- Identify the owner of the source system and confirm whether it is an approved vulnerability scanner, monitoring system, penetration-test system, or administrator workstation.\n- Review the destination services and check whether any connection was allowed or followed by authentication, exploit, or other threat alerts.\n- Search for earlier or later scanning from the same source and check whether other systems were contacted.\n- If the activity was authorised, document the owner and testing window. If it was not authorised or cannot be explained, escalate it to the SOC and the relevant system or network owner.\n\n### Response\n\nDo not automatically block, isolate, or disable the source based on this alert alone. Preserve the related logs and follow the approved incident-response process if the activity is unauthorised or if successful access or exploitation is confirmed.",
+    "output_index": "",
+    "timestamp_override": "event.ingested",
+    "author": [
+      "Elastic"
+    ],
+    "false_positives": [],
+    "from": "now-9m",
+    "rule_id": "aa22b877-ad90-4118-a729-8124821b796b",
+    "max_signals": 5,
+    "risk_score_mapping": [],
+    "severity_mapping": [],
+    "threat": [
+      {
+        "framework": "MITRE ATT&CK",
+        "tactic": {
+          "id": "TA0007",
+          "name": "Discovery",
+          "reference": "https://attack.mitre.org/tactics/TA0007/"
+        },
+        "technique": [
+          {
+            "id": "T1046",
+            "name": "Network Service Discovery",
+            "reference": "https://attack.mitre.org/techniques/T1046/"
+          }
+        ]
+      },
+      {
+        "framework": "MITRE ATT&CK",
+        "tactic": {
+          "id": "TA0043",
+          "name": "Reconnaissance",
+          "reference": "https://attack.mitre.org/tactics/TA0043/"
+        },
+        "technique": [
+          {
+            "id": "T1595",
+            "name": "Active Scanning",
+            "reference": "https://attack.mitre.org/techniques/T1595/",
+            "subtechnique": [
+              {
+                "id": "T1595.001",
+                "name": "Scanning IP Blocks",
+                "reference": "https://attack.mitre.org/techniques/T1595/001/"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "to": "now",
+    "references": [],
+    "version": 1,
+    "exceptions_list": [],
+    "immutable": false,
+    "rule_source": {
+      "type": "internal"
+    },
+    "related_integrations": [
+      {
+        "package": "network_traffic",
+        "version": "^1.1.0"
+      },
+      {
+        "package": "panw",
+        "version": "^5.0.0"
+      }
+    ],
+    "required_fields": [
+      {
+        "name": "destination.port",
+        "type": "long",
+        "ecs": true
+      },
+      {
+        "name": "event.action",
+        "type": "keyword",
+        "ecs": true
+      },
+      {
+        "name": "network.packets",
+        "type": "long",
+        "ecs": true
+      },
+      {
+        "name": "source.ip",
+        "type": "ip",
+        "ecs": true
+      }
+    ],
+    "setup": "",
+    "type": "threshold",
+    "language": "kuery",
+    "index": [
+      "logs-network_traffic.*",
+      "packetbeat-*",
+      "filebeat-*",
+      "logs-panw.panos*"
+    ],
+    "query": "event.dataset:\"panw.panos\" and event.category:network and destination.port:* and network.packets <= 2 and source.ip:(10.0.0.0/8 or 172.16.0.0/12 or 192.168.0.0/16)",
+    "threshold": {
+      "field": [
+        "destination.ip",
+        "source.ip"
+      ],
+      "value": 1,
+      "cardinality": [
+        {
+          "field": "destination.port",
+          "value": 250
+        }
+      ]
+    },
+    "actions": [],
+    "execution_summary": {
+      "last_execution": {
+        "date": "2026-09-19T14:04:08.227Z",
+        "status": "succeeded",
+        "status_order": 0,
+        "message": "Rule execution completed successfully",
+        "metrics": {
+          "total_indexing_duration_ms": 262,
+          "total_search_duration_ms": 344
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "rule_id": "32923416-763a-4531-bb35-f33b9232ecdb",
+  "changed_documentation_fields": [
+    "description",
+    "note"
+  ],
+  "unchanged_non_documentation_fields": true,
+  "pre_revision": 1,
+  "post_revision": 2,
+  "description_has_literal_escaped_newline": false,
+  "note_has_literal_escaped_newline": false,
+  "name": "RPC (Remote Procedure Call) to the Internet"
+}

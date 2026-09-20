@@ -1,0 +1,13 @@
+{
+  "description_changed": true,
+  "note_changed": true,
+  "literal_escaped_newlines_in_note": false,
+  "unchanged_fields_match": true,
+  "pre_revision": 2,
+  "post_revision": 3,
+  "pre_saved_object_id": "69a37313-5950-4777-9eed-2ef8874c647d",
+  "post_saved_object_id": "69a37313-5950-4777-9eed-2ef8874c647d",
+  "rule_id": "01801919-8c5c-4962-b709-926e38fba60b",
+  "name": "PAN-OS Allowed Inbound Administrative Access",
+  "enabled": true
+}

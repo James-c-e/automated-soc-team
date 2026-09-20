@@ -1,0 +1,37 @@
+{
+  "operation": "documentation-only rule updates",
+  "timestamp_utc": "2026-09-19T14:30:39Z",
+  "targets": [
+    {
+      "name": "Accepted Default Telnet Port Connection",
+      "rule_id": "34fde489-94b0-4500-a76f-b8a157cf9269",
+      "saved_object_id": "f879fa26-48e3-4b61-a70f-85d2df85f675",
+      "put_http_status": 200,
+      "revision_before": 2,
+      "revision_after": 3,
+      "updated_at": "2026-09-19T14:30:37.430Z"
+    },
+    {
+      "name": "IPSEC NAT Traversal Port Activity",
+      "rule_id": "a9cb3641-ff4b-4cdc-a063-b4b8d02a67c7",
+      "saved_object_id": "7df1b727-2277-46e8-9cd7-8bcbbd9db0f0",
+      "put_http_status": 200,
+      "revision_before": 5,
+      "revision_after": 6,
+      "updated_at": "2026-09-19T14:30:38.206Z"
+    },
+    {
+      "name": "PAN-OS Allowed IPsec ESP-UDP Tunnel Activity",
+      "rule_id": "9df10fd0-1e86-4393-83ab-b3feb77a846a",
+      "saved_object_id": "b6af01d7-d7d1-438a-9abe-fba1aaecaccb",
+      "put_http_status": 200,
+      "revision_before": 0,
+      "revision_after": 1,
+      "updated_at": "2026-09-19T14:30:39.183Z"
+    }
+  ],
+  "readback_http_status": 200,
+  "unchanged_fields_match": true,
+  "changed_fields": ["description", "note"],
+  "automatic_actions_added": false
+}

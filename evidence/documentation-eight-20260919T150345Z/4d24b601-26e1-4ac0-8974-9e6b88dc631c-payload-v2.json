@@ -1,0 +1,134 @@
+{
+  "updated_at": "2026-09-18T19:38:36.397Z",
+  "updated_by": "security@securecloudplus.co.uk",
+  "created_at": "2026-09-13T21:48:55.507Z",
+  "created_by": "security@securecloudplus.co.uk",
+  "name": "Roshal Archive (RAR) or PowerShell File Downloaded from the Internet (PAN-OS schema)",
+  "tags": [
+    "Use Case: Threat Detection",
+    "Tactic: Command and Control",
+    "Domain: Endpoint",
+    "Data Source: PAN-OS",
+    "Resources: Investigation Guide"
+  ],
+  "interval": "5m",
+  "enabled": true,
+  "revision": 1,
+  "description": "Detects an external URL that references a PowerShell script or a RAR archive. The network event does not by itself prove that a file was downloaded, opened, extracted, or executed.",
+  "risk_score": 47,
+  "severity": "medium",
+  "note": "Investigation\n\n1. Record the source computer, user if available, full URL, external destination, time, and firewall or web-filter action.\n2. Confirm whether the download was expected and whether the website and file are approved.\n3. Check proxy and endpoint records to confirm whether the file was actually downloaded, opened, extracted, or run.\n4. Look for related process, malware, authentication, and follow-on network alerts.\n\nResponse\n\nDo not automatically quarantine or isolate the computer from this network event alone. Confirm the activity with the user or system owner. Escalate an unexpected file or confirmed execution for endpoint review through the approved incident-response process.",
+  "output_index": "",
+  "timestamp_override": "event.ingested",
+  "author": [
+    "Elastic"
+  ],
+  "false_positives": [
+    "Downloading RAR or PowerShell files from the Internet may be expected for certain systems. This rule should be tailored to either exclude systems as sources or destinations in which this behavior is expected."
+  ],
+  "from": "now-9m",
+  "rule_id": "4d24b601-26e1-4ac0-8974-9e6b88dc631c",
+  "max_signals": 100,
+  "risk_score_mapping": [],
+  "severity_mapping": [],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0011",
+        "name": "Command and Control",
+        "reference": "https://attack.mitre.org/tactics/TA0011/"
+      },
+      "technique": [
+        {
+          "id": "T1105",
+          "name": "Ingress Tool Transfer",
+          "reference": "https://attack.mitre.org/techniques/T1105/"
+        }
+      ]
+    }
+  ],
+  "to": "now",
+  "references": [
+    "https://www.fireeye.com/blog/threat-research/2017/04/fin7-phishing-lnk.html",
+    "https://www.justice.gov/opa/press-release/file/1084361/download",
+    "https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml"
+  ],
+  "version": 1,
+  "exceptions_list": [],
+  "immutable": false,
+  "rule_source": {
+    "type": "internal"
+  },
+  "related_integrations": [
+    {
+      "package": "network_traffic",
+      "version": "^1.1.0"
+    },
+    {
+      "package": "panw",
+      "version": "^5.0.0"
+    }
+  ],
+  "required_fields": [
+    {
+      "name": "destination.ip",
+      "type": "ip",
+      "ecs": true
+    },
+    {
+      "name": "event.category",
+      "type": "keyword",
+      "ecs": true
+    },
+    {
+      "name": "event.dataset",
+      "type": "keyword",
+      "ecs": true
+    },
+    {
+      "name": "network.protocol",
+      "type": "keyword",
+      "ecs": true
+    },
+    {
+      "name": "source.ip",
+      "type": "ip",
+      "ecs": true
+    },
+    {
+      "name": "url.extension",
+      "type": "keyword",
+      "ecs": true
+    },
+    {
+      "name": "url.path",
+      "type": "wildcard",
+      "ecs": true
+    }
+  ],
+  "setup": "",
+  "type": "query",
+  "language": "kuery",
+  "index": [
+    "packetbeat-*",
+    "auditbeat-*",
+    "filebeat-*",
+    "logs-network_traffic.*",
+    "logs-panw.panos*"
+  ],
+  "query": "event.dataset:\"panw.panos\" and event.category:network and (url.extension:(ps1 or rar) or url.path:(*.ps1 or *.rar)) and not destination.ip:(10.0.0.0/8 or 127.0.0.0/8 or 169.254.0.0/16 or 172.16.0.0/12 or 192.0.0.0/24 or 192.0.0.0/29 or 192.0.0.8/32 or 192.0.0.9/32 or 192.0.0.10/32 or 192.0.0.170/32 or 192.0.0.171/32 or 192.0.2.0/24 or 192.31.196.0/24 or 192.52.193.0/24 or 192.168.0.0/16 or 192.88.99.0/24 or 224.0.0.0/4 or 100.64.0.0/10 or 192.175.48.0/24 or 198.18.0.0/15 or 198.51.100.0/24 or 203.0.113.0/24 or 240.0.0.0/4 or \"::1\" or \"FE80::/10\" or \"FF00::/8\") and source.ip:(10.0.0.0/8 or 172.16.0.0/12 or 192.168.0.0/16)",
+  "actions": [],
+  "execution_summary": {
+    "last_execution": {
+      "date": "2026-09-19T14:59:16.639Z",
+      "status": "succeeded",
+      "status_order": 0,
+      "message": "Rule execution completed successfully",
+      "metrics": {
+        "total_indexing_duration_ms": 90,
+        "total_search_duration_ms": 8
+      }
+    }
+  }
+}

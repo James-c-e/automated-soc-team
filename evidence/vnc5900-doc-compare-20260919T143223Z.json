@@ -1,0 +1,26 @@
+{
+  "pre_revision": 0,
+  "post_revision": 1,
+  "changed_fields": [
+    "description",
+    "execution_summary",
+    "note",
+    "revision",
+    "updated_at"
+  ],
+  "documentation_fields_changed": true,
+  "other_fields_unchanged": true,
+  "preserved_fields": {
+    "query": true,
+    "interval": true,
+    "from": true,
+    "to": true,
+    "threshold": true,
+    "severity": true,
+    "risk_score": true,
+    "threat": true,
+    "actions": true,
+    "exceptions_list": true,
+    "enabled": true
+  }
+}

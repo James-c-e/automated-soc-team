@@ -1,0 +1,349 @@
+{
+  "http_status": 200,
+  "timestamp_utc": "2026-09-19T14:30:40Z",
+  "total": 37,
+  "enabled_count": 31,
+  "targets": [
+    {
+      "id": "f879fa26-48e3-4b61-a70f-85d2df85f675",
+      "updated_at": "2026-09-19T14:30:37.430Z",
+      "updated_by": "security@securecloudplus.co.uk",
+      "created_at": "2026-09-13T16:31:21.698Z",
+      "created_by": "security@securecloudplus.co.uk",
+      "name": "Accepted Default Telnet Port Connection",
+      "tags": [
+        "Domain: Endpoint",
+        "Use Case: Threat Detection",
+        "Tactic: Command and Control",
+        "Tactic: Lateral Movement",
+        "Tactic: Initial Access",
+        "Data Source: PAN-OS",
+        "Resources: Investigation Guide"
+      ],
+      "interval": "5m",
+      "enabled": true,
+      "revision": 3,
+      "description": "Detects TCP port 23 activity, which is commonly associated with Telnet. Telnet sends information, including passwords, without encryption. This alert shows network activity; it does not prove that a Telnet session was accepted or that anyone logged in.",
+      "risk_score": 47,
+      "severity": "medium",
+      "note": "## Investigation guidance\n\nReview the event direction, source and destination addresses, connection outcome, time, and any repeated attempts. Identify the owner of both systems and confirm whether the destination is expected to provide Telnet. Check whether the source is an approved administrator, monitoring system, test system, or penetration test.\n\nBecause Telnet is unencrypted, confirm whether the service is necessary and whether a secure alternative such as SSH is available. Review authentication and related threat logs to determine whether a session or login succeeded.\n\n## Response\n\nIf the activity is unexplained or unauthorised, preserve the relevant logs, identify the system owner, and escalate to the SOC through the approved incident process. Do not automatically block, isolate, reset passwords, or disable accounts based on this alert alone.",
+      "license": "Elastic License v2",
+      "output_index": "",
+      "timeline_id": "300afc76-072d-4261-864d-4149714bf3f1",
+      "timeline_title": "Comprehensive Network Timeline",
+      "timestamp_override": "event.ingested",
+      "author": [
+        "Elastic"
+      ],
+      "false_positives": [
+        "IoT (Internet of Things) devices and networks may use telnet and can be excluded if desired. Some business work-flows may use Telnet for administration of older devices. These often have a predictable behavior. Telnet activity involving an unusual source or destination may be more suspicious. Telnet activity involving a production server that has no known associated Telnet work-flow or business requirement is often suspicious."
+      ],
+      "from": "now-9m",
+      "rule_id": "34fde489-94b0-4500-a76f-b8a157cf9269",
+      "max_signals": 100,
+      "risk_score_mapping": [],
+      "severity_mapping": [],
+      "threat": [
+        {
+          "framework": "MITRE ATT&CK",
+          "tactic": {
+            "id": "TA0011",
+            "name": "Command and Control",
+            "reference": "https://attack.mitre.org/tactics/TA0011/"
+          },
+          "technique": [
+            {
+              "id": "T1021",
+              "name": "Remote Services",
+              "reference": "https://attack.mitre.org/techniques/T1021/"
+            }
+          ]
+        },
+        {
+          "framework": "MITRE ATT&CK",
+          "tactic": {
+            "id": "TA0008",
+            "name": "Lateral Movement",
+            "reference": "https://attack.mitre.org/tactics/TA0008/"
+          },
+          "technique": [
+            {
+              "id": "T1021",
+              "name": "Remote Services",
+              "reference": "https://attack.mitre.org/techniques/T1021/"
+            }
+          ]
+        },
+        {
+          "framework": "MITRE ATT&CK",
+          "tactic": {
+            "id": "TA0001",
+            "name": "Initial Access",
+            "reference": "https://attack.mitre.org/tactics/TA0001/"
+          },
+          "technique": [
+            {
+              "id": "T1190",
+              "name": "Exploit Public-Facing Application",
+              "reference": "https://attack.mitre.org/techniques/T1190/"
+            }
+          ]
+        }
+      ],
+      "to": "now",
+      "references": [],
+      "version": 109,
+      "exceptions_list": [],
+      "immutable": true,
+      "rule_source": {
+        "type": "external",
+        "is_customized": true
+      },
+      "related_integrations": [
+        {
+          "package": "network_traffic",
+          "version": "^1.1.0"
+        },
+        {
+          "package": "panw",
+          "version": "^5.0.0"
+        }
+      ],
+      "required_fields": [
+        {
+          "name": "destination.port",
+          "type": "long",
+          "ecs": true
+        },
+        {
+          "name": "event.action",
+          "type": "keyword",
+          "ecs": true
+        },
+        {
+          "name": "event.category",
+          "type": "keyword",
+          "ecs": true
+        },
+        {
+          "name": "event.dataset",
+          "type": "keyword",
+          "ecs": true
+        },
+        {
+          "name": "event.type",
+          "type": "keyword",
+          "ecs": true
+        }
+      ],
+      "setup": "",
+      "type": "query",
+      "language": "kuery",
+      "index": [
+        "packetbeat-*",
+        "auditbeat-*",
+        "filebeat-*",
+        "logs-network_traffic.*",
+        "logs-panw.panos*"
+      ],
+      "query": "(event.dataset:network_traffic.flow or event.category:(network or network_traffic))\n    and event.type:connection and not event.action:(\n        flow_dropped or flow_denied or denied or deny or\n        flow_terminated or timeout or Reject or network_flow)\n    and destination.port:23\n",
+      "actions": [],
+      "execution_summary": {
+        "last_execution": {
+          "date": "2026-09-19T14:26:40.987Z",
+          "status": "succeeded",
+          "status_order": 0,
+          "message": "Rule execution completed successfully",
+          "metrics": {
+            "total_search_duration_ms": 8
+          }
+        }
+      }
+    },
+    {
+      "id": "7df1b727-2277-46e8-9cd7-8bcbbd9db0f0",
+      "updated_at": "2026-09-19T14:30:38.206Z",
+      "updated_by": "security@securecloudplus.co.uk",
+      "created_at": "2026-09-13T16:31:21.610Z",
+      "created_by": "security@securecloudplus.co.uk",
+      "name": "IPSEC NAT Traversal Port Activity",
+      "tags": [
+        "Tactic: Command and Control",
+        "Domain: Endpoint",
+        "Use Case: Threat Detection",
+        "Data Source: PAN-OS",
+        "Resources: Investigation Guide"
+      ],
+      "interval": "5m",
+      "enabled": true,
+      "revision": 6,
+      "description": "Detects UDP port 4500 traffic, which is commonly associated with IPsec NAT traversal. The port alone does not prove that the traffic is IPsec, malicious, or an attempt to evade security controls.",
+      "risk_score": 21,
+      "severity": "low",
+      "note": "## Investigation guidance\n\nReview the direction, source and destination addresses, connection action, time, volume, and repetition. Confirm whether the source or destination is an approved VPN gateway, remote-access service, or other authorised system. Check the network owner and any related VPN configuration or change record.\n\nReview related traffic and threat alerts to determine whether the activity is part of an expected VPN connection or whether it is unexplained. UDP/4500 activity alone does not prove compromise or malicious tunnelling.\n\n## Response\n\nIf the activity is unexplained or unauthorised, preserve the relevant logs, identify the system owner, and escalate to the SOC through the approved incident process. Do not automatically block, isolate, reset passwords, or disable accounts based on this alert alone.",
+      "license": "Elastic License v2",
+      "output_index": "",
+      "author": [
+        "Elastic"
+      ],
+      "false_positives": [
+        "Some networks may utilize these protocols but usage that is unfamiliar to local network administrators can be unexpected and suspicious. Because this port is in the ephemeral range, this rule may false under certain conditions, such as when an application server with a public IP address replies to a client which has used a UDP port in the range by coincidence. This is uncommon but such servers can be excluded."
+      ],
+      "from": "now-9m",
+      "rule_id": "a9cb3641-ff4b-4cdc-a063-b4b8d02a67c7",
+      "max_signals": 100,
+      "risk_score_mapping": [],
+      "severity_mapping": [],
+      "threat": [
+        {
+          "framework": "MITRE ATT&CK",
+          "tactic": {
+            "id": "TA0011",
+            "name": "Command and Control",
+            "reference": "https://attack.mitre.org/tactics/TA0011/"
+          },
+          "technique": [
+            {
+              "id": "T1572",
+              "name": "Protocol Tunneling",
+              "reference": "https://attack.mitre.org/techniques/T1572/"
+            }
+          ]
+        }
+      ],
+      "to": "now",
+      "references": [],
+      "version": 108,
+      "exceptions_list": [],
+      "immutable": true,
+      "rule_source": {
+        "type": "external",
+        "is_customized": true
+      },
+      "related_integrations": [],
+      "required_fields": [],
+      "setup": "",
+      "type": "query",
+      "language": "kuery",
+      "index": [
+        "packetbeat-*",
+        "auditbeat-*",
+        "filebeat-*",
+        "logs-network_traffic.*",
+        "logs-panw.*"
+      ],
+      "query": "(event.dataset: network_traffic.flow or (event.category: (network or network_traffic))) and network.transport:udp and destination.port:4500\n",
+      "alert_suppression": {
+        "group_by": [
+          "destination.ip"
+        ],
+        "duration": {
+          "value": 1,
+          "unit": "h"
+        }
+      },
+      "actions": [],
+      "execution_summary": {
+        "last_execution": {
+          "date": "2026-09-19T14:28:10.517Z",
+          "status": "succeeded",
+          "status_order": 0,
+          "message": "Rule execution completed successfully",
+          "metrics": {
+            "total_indexing_duration_ms": 36,
+            "total_search_duration_ms": 6
+          }
+        }
+      }
+    },
+    {
+      "id": "b6af01d7-d7d1-438a-9abe-fba1aaecaccb",
+      "updated_at": "2026-09-19T14:30:39.183Z",
+      "updated_by": "security@securecloudplus.co.uk",
+      "created_at": "2026-09-18T19:11:57.587Z",
+      "created_by": "security@securecloudplus.co.uk",
+      "name": "PAN-OS Allowed IPsec ESP-UDP Tunnel Activity",
+      "tags": [
+        "Tactic: Command and Control",
+        "Technique: T1572",
+        "Data Source: PAN-OS",
+        "Use Case: Threat Detection"
+      ],
+      "interval": "5m",
+      "enabled": true,
+      "revision": 1,
+      "description": "Detects allowed PAN-OS IPsec ESP-over-UDP activity to UDP port 4501. This may be legitimate VPN traffic; the alert does not by itself prove misuse, compromise, or successful access.",
+      "risk_score": 47,
+      "severity": "medium",
+      "note": "## Investigation guidance\n\nReview the VPN gateway, source and destination addresses, direction, connection action, time, volume, and repeated activity. Confirm whether the gateway and systems belong to an approved VPN service or business connection. Check the network owner and any related VPN configuration or change record.\n\nReview related traffic and threat alerts to determine whether the activity matches an expected VPN session. Allowed traffic indicates that the firewall permitted the event; it does not prove that a user authenticated or that the tunnel was used maliciously.\n\n## Response\n\nIf the activity is unexplained or unauthorised, preserve the relevant logs, identify the system owner, and escalate to the SOC through the approved incident process. Do not automatically block, isolate, reset passwords, or disable accounts based on this alert alone.",
+      "output_index": "",
+      "author": [
+        "SOC Analyst"
+      ],
+      "false_positives": [],
+      "from": "now-9m",
+      "rule_id": "9df10fd0-1e86-4393-83ab-b3feb77a846a",
+      "max_signals": 5,
+      "risk_score_mapping": [],
+      "severity_mapping": [],
+      "threat": [
+        {
+          "framework": "MITRE ATT&CK",
+          "tactic": {
+            "id": "TA0011",
+            "name": "Command and Control",
+            "reference": "https://attack.mitre.org/tactics/TA0011/"
+          },
+          "technique": [
+            {
+              "id": "T1572",
+              "name": "Protocol Tunneling",
+              "reference": "https://attack.mitre.org/techniques/T1572/"
+            }
+          ]
+        }
+      ],
+      "to": "now",
+      "references": [],
+      "version": 1,
+      "exceptions_list": [],
+      "immutable": false,
+      "rule_source": {
+        "type": "internal"
+      },
+      "related_integrations": [],
+      "required_fields": [],
+      "setup": "",
+      "type": "threshold",
+      "language": "kuery",
+      "index": [
+        "packetbeat-*",
+        "auditbeat-*",
+        "filebeat-*",
+        "logs-network_traffic.*",
+        "logs-panw.*"
+      ],
+      "query": "event.dataset:\"panw.panos\" and panw.panos.type:\"TRAFFIC\" and panw.panos.action:allow and panw.panos.application.tunneled:\"ipsec-esp-udp\" and destination.port:4501",
+      "threshold": {
+        "field": [
+          "source.ip",
+          "destination.ip"
+        ],
+        "value": 2
+      },
+      "actions": [],
+      "execution_summary": {
+        "last_execution": {
+          "date": "2026-09-19T14:27:02.014Z",
+          "status": "succeeded",
+          "status_order": 0,
+          "message": "Rule execution completed successfully",
+          "metrics": {
+            "total_indexing_duration_ms": 90,
+            "total_search_duration_ms": 24
+          }
+        }
+      }
+    }
+  ]
+}

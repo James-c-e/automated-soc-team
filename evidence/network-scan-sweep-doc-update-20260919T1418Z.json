@@ -1,0 +1,76 @@
+{
+  "operation": "documentation-only rule updates",
+  "timestamp_utc": "2026-09-19T14:17:58Z",
+  "endpoint": "PUT /api/detection_engine/rules?id=<saved-object-id>",
+  "readback_endpoint": "GET /api/detection_engine/rules/_find?per_page=1000",
+  "targets": [
+    {
+      "name": "Potential Network Scan Detected (PAN-OS schema)",
+      "rule_id": "4683eb5c-1fa1-459b-8c36-b97f30c48a97",
+      "saved_object_id": "971f76ae-bf9f-470c-a690-4fdb62d565b8",
+      "pre_change": {
+        "http_status": 200,
+        "revision": 1,
+        "updated_at": "2026-09-18T19:38:39.679Z",
+        "enabled": true,
+        "type": "threshold",
+        "interval": "5m",
+        "from": "now-9m",
+        "to": "now",
+        "query": "event.dataset:\"panw.panos\" and event.category:network and destination.port:* and source.ip:(10.0.0.0/8 or 172.16.0.0/12 or 192.168.0.0/16)",
+        "threshold": {"field":["destination.ip","source.ip"],"value":1,"cardinality":[{"field":"destination.port","value":250}]},
+        "max_signals": 5,
+        "severity": "low",
+        "risk_score": 21,
+        "actions": [],
+        "exceptions_list": [],
+        "description": "This rule identifies a potential port scan. A port scan is a method utilized by attackers to systematically scan a target system or network for open ports, allowing them to identify available services and potential vulnerabilities. By mapping out the open ports, attackers can gather critical information to plan and execute targeted attacks, gaining unauthorized access, compromising security, and potentially leading to data breaches, unauthorized control, or further exploitation of the targeted system or network. This rule defines a threshold-based approach to detect connection attempts from a single source to a wide range of destination ports.",
+        "note_preserved": true
+      },
+      "write": {"http_status": 200, "changed_fields":["description","note"]},
+      "post_change": {
+        "http_status": 200,
+        "revision": 2,
+        "updated_at": "2026-09-19T14:17:57.511Z",
+        "execution_status": "succeeded",
+        "description": "Detects possible internal port scanning. It triggers when one internal source and one destination are associated with at least 250 distinct destination ports during the rule window. This indicates probing of services; it does not prove that access succeeded, a login occurred, or that the destination was compromised.",
+        "note": "## Investigation guidance\n\nThis alert means that one internal source contacted one destination across at least 250 different ports during the rule window. It indicates possible probing of services, not successful access or compromise.\n\nReview the source owner, destination system, time window, destination ports, connection results, and any firewall policy involved. Confirm whether the source is an approved vulnerability scanner, monitoring system, penetration test, or other authorised tool. Review related authentication, exploit, malware, and threat alerts for the source and destination.\n\nIf the activity is unexplained or unauthorised, preserve the relevant logs, identify the system owner, and escalate to the SOC through the approved incident process. Do not automatically block, isolate, reset passwords, or disable accounts based on this alert alone."
+      }
+    },
+    {
+      "name": "Potential Network Sweep Detected (PAN-OS schema)",
+      "rule_id": "1aeeafc3-9fdd-437c-8b6f-397ac5551054",
+      "saved_object_id": "030f52b4-81ba-4f57-9b4f-6cf2abe38f2f",
+      "pre_change": {
+        "http_status": 200,
+        "revision": 1,
+        "updated_at": "2026-09-18T19:38:38.406Z",
+        "enabled": true,
+        "type": "threshold",
+        "interval": "5m",
+        "from": "now-9m",
+        "to": "now",
+        "query": "event.dataset:\"panw.panos\" and event.category:network and destination.port:(21 or 22 or 23 or 25 or 139 or 445 or 3389 or 5985 or 5986) and source.ip:(10.0.0.0/8 or 172.16.0.0/12 or 192.168.0.0/16)",
+        "threshold": {"field":["source.ip"],"value":1,"cardinality":[{"field":"destination.ip","value":100}]},
+        "max_signals": 5,
+        "severity": "low",
+        "risk_score": 21,
+        "actions": [],
+        "exceptions_list": [],
+        "description": "This rule identifies a potential network sweep. A network sweep is a method used by attackers to scan a target network, identifying active hosts, open ports, and available services to gather information on vulnerabilities and weaknesses. This reconnaissance helps them plan subsequent attacks and exploit potential entry points for unauthorized access, data theft, or other malicious activities. This rule defines a threshold-based approach to detect multiple connection attempts from a single host to numerous destination hosts over commonly used network services.",
+        "note_preserved": true
+      },
+      "write": {"http_status": 200, "changed_fields":["description","note"]},
+      "post_change": {
+        "http_status": 200,
+        "revision": 2,
+        "updated_at": "2026-09-19T14:17:58.658Z",
+        "execution_status": "succeeded",
+        "description": "Detects possible internal network sweeping. It triggers when one internal source contacts at least 100 distinct internal destinations on selected sensitive service ports—21, 22, 23, 25, 139, 445, 3389, 5985, or 5986—during the rule window. This may be approved vulnerability scanning or penetration testing; it is not proof of compromise.",
+        "note": "## Investigation guidance\n\nThis alert means that one internal source contacted at least 100 different internal destinations on selected sensitive service ports during the rule window. It may be an approved vulnerability scan, penetration test, monitoring activity, or administration tool. It does not by itself prove that a login succeeded, a service was compromised, or data was accessed.\n\nReview the source owner, destination systems, time window, service ports, connection results, and any firewall policy involved. Confirm whether the source is an approved scanner, monitoring system, penetration test, or other authorised activity. Review related authentication, exploit, malware, and threat alerts for the source and destinations.\n\nIf the activity is unexplained or unauthorised, preserve the relevant logs, identify the system owner, and escalate to the SOC through the approved incident process. Do not automatically block, isolate, reset passwords, or disable accounts based on this alert alone."
+      }
+    }
+  ],
+  "unchanged_fields_verified": ["query","type","language","index","interval","from","to","threshold","max_signals","severity","risk_score","threat","actions","exceptions_list","enabled","tags","timestamp_override","output_index","rule_id","name"],
+  "rollback": "Restore only each target's pre-change description and note using its saved_object_id, PUT the complete rule object through the same endpoint, then read the collection back and verify the original documentation and all unchanged fields."
+}

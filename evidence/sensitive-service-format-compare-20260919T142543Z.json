@@ -1,0 +1,20 @@
+{
+  "timestamp": "20260919T142543Z",
+  "target": {
+    "saved_object_id": "50457dc6-b2ee-41ec-889b-abd4af8527b6",
+    "stable_rule_id": "818a5377-ab99-41f7-a0e8-0c81a9d73759",
+    "name": "PAN-OS Repeated Sensitive-Service Access"
+  },
+  "changed_fields": [
+    "note"
+  ],
+  "note_semantic_text_preserved": true,
+  "pre_note_had_literal_escaped_newlines": true,
+  "post_note_has_literal_escaped_newlines": false,
+  "post_note_has_actual_newlines": true,
+  "unchanged_configuration_fields_match": true,
+  "pre_revision": 3,
+  "post_revision": 4,
+  "pre_updated_at": "2026-09-19T14:19:14.100Z",
+  "post_updated_at": "2026-09-19T14:25:24.561Z"
+}

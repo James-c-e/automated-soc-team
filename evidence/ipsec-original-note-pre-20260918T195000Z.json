@@ -1,0 +1,17 @@
+{
+  "operation": "pre-change read-back",
+  "rule_id": "7df1b727-2277-46e8-9cd7-8bcbbd9db0f0",
+  "name": "IPSEC NAT Traversal Port Activity",
+  "http_status": 200,
+  "revision": 4,
+  "note_artifact": "## Triage and Analysis\\n\\n### Investigating IPsec NAT Traversal Port Activity",
+  "note_artifact_count": 1,
+  "note_sha256": "f2664e4eb4a6591bb85acc4879324ae4946865fc215002d793869d59940f55dd",
+  "preservation_check": {
+    "query": "(event.dataset: network_traffic.flow or (event.category: (network or network_traffic))) and network.transport:udp and destination.port:4500\\n",
+    "interval": "5m",
+    "suppression": null,
+    "mitre_technique": "T1572",
+    "enabled": true
+  }
+}

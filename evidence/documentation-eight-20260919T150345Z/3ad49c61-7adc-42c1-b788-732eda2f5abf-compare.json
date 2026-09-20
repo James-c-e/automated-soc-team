@@ -1,0 +1,13 @@
+{
+  "rule_id": "3ad49c61-7adc-42c1-b788-732eda2f5abf",
+  "changed_documentation_fields": [
+    "description",
+    "note"
+  ],
+  "unchanged_non_documentation_fields": true,
+  "pre_revision": 1,
+  "post_revision": 2,
+  "description_has_literal_escaped_newline": false,
+  "note_has_literal_escaped_newline": false,
+  "name": "VNC (Virtual Network Computing) to the Internet"
+}
